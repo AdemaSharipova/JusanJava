@@ -11,6 +11,20 @@ public class CustomLinkedList {
         this.size = 0;
     }
 
+    public void print() {
+        if (head != null) {
+            Node currentNode = head;
+            System.out.print("[");
+            while(currentNode.getNextNode() != null) {
+                System.out.print(currentNode.getData() + ", " );
+                currentNode = currentNode.getNextNode();
+            }
+            System.out.println(currentNode.getData() + "]");
+        } else {
+            System.out.println("[]");
+        }
+    }
+
     public void add(int data) {
         Node node = new Node(data);
         if(this.head == null) {
@@ -43,48 +57,6 @@ public class CustomLinkedList {
             currentNode.setNextNode(newNode);
         }
         size++;
-    }
-
-    public void remove(int data) {
-        Node currentNode = head;
-
-        if(currentNode.getData() == data) {
-            removeFirst();
-            return;
-        }
-
-        while(currentNode.getNextNode() != null) {
-            if (currentNode.getNextNode().getData() == data) {
-                break;
-            }
-            currentNode = currentNode.getNextNode();
-        }
-        currentNode.setNextNode(currentNode.getNextNode().getNextNode());
-        size--;
-    }
-
-    public void removeFirst() {
-        head = head.getNextNode();
-        size--;
-    }
-
-    public void removeLast() {
-        int last = size-1;
-        removeByIndex(last);
-    }
-
-    public void print() {
-        if (head != null) {
-            Node currentNode = head;
-            System.out.print("[");
-            while(currentNode.getNextNode() != null) {
-                System.out.print(currentNode.getData() + ", " );
-                currentNode = currentNode.getNextNode();
-            }
-            System.out.println(currentNode.getData() + "]");
-        } else {
-            System.out.println("[]");
-        }
     }
 
     public int get(int index) {
@@ -128,24 +100,6 @@ public class CustomLinkedList {
         return false;
     }
 
-    public void removeByIndex(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Invalid index: " + index);
-        }
-
-        if (index == 0) {
-            head = head.getNextNode();
-        } else {
-            Node currentNode = head;
-            for (int i = 0; i < index - 1; i++) {
-                currentNode = currentNode.getNextNode();
-            }
-            currentNode.setNextNode(currentNode.getNextNode().getNextNode());
-        }
-        size--;
-
-    }
-
     public void clear() {
         head = null;
         size = 0;
@@ -170,6 +124,52 @@ public class CustomLinkedList {
         throw new NoSuchElementException("No such element in the list.");
     }
 
+    public void remove(int data) {
+        Node currentNode = head;
+
+        if(currentNode.getData() == data) {
+            removeFirst();
+            return;
+        }
+
+        while(currentNode.getNextNode() != null) {
+            if (currentNode.getNextNode().getData() == data) {
+                break;
+            }
+            currentNode = currentNode.getNextNode();
+        }
+        currentNode.setNextNode(currentNode.getNextNode().getNextNode());
+        size--;
+    }
+
+    public void removeByIndex(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Invalid index: " + index);
+        }
+
+        if (index == 0) {
+            head = head.getNextNode();
+        } else {
+            Node currentNode = head;
+            for (int i = 0; i < index - 1; i++) {
+                currentNode = currentNode.getNextNode();
+            }
+            currentNode.setNextNode(currentNode.getNextNode().getNextNode());
+        }
+        size--;
+
+    }
+
+    public void removeFirst() {
+        head = head.getNextNode();
+        size--;
+    }
+
+    public void removeLast() {
+        int last = size-1;
+        removeByIndex(last);
+    }
+
     public void set(int index, int data){
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Invalid index: " + index);
@@ -185,6 +185,21 @@ public class CustomLinkedList {
 
     public int size(){
         return size;
+    }
+
+    public int[] toArray (){
+        int[] array = new int[size];
+
+        Node currentNode = head;
+        int index = 0;
+
+        while (currentNode != null) {
+            array[index] = currentNode.getData();
+            currentNode = currentNode.getNextNode();
+            index++;
+        }
+
+        return array;
     }
 
     public boolean isEmpty() {
