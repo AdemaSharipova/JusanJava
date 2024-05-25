@@ -1,4 +1,4 @@
-package org.example;
+package org.example.hw9;
 
 class MyArraySizeException extends Exception {
     public MyArraySizeException(String message) {
