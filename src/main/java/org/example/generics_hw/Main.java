@@ -51,7 +51,7 @@ public class Main {
         box3.addFruit(new Apple());
 
 
-//        System.out.println(box1.compare(box3));
+        System.out.println(box1.compare(box3));
         box3.pour(box1);
         System.out.println(box3.getFruits());
         System.out.println(box1.getFruits());
